@@ -1,0 +1,214 @@
+using System;
+
+namespace TicTac
+{
+
+
+static class TicTacToe 
+{
+    static void Main() 
+    {
+        int[,] grid = new int[3, 3]
+        {
+            { 0, 0, 0 },
+            { 0, 0, 0 },
+            { 0, 0, 0 }
+        };
+
+        
+
+        PrintGrid(grid);
+    }
+
+    static void PrintGrid(int[,] grid)
+    {
+        
+        bool gameIsOver = false;
+        bool alreadySelected = false;
+
+        int rows = grid.GetLength(0);
+        int cols = grid.GetLength(1);
+
+
+        for (int i = 0; i < rows; i++) 
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                Console.Write(grid[i, j] + " ");
+            }
+            Console.WriteLine();
+        }
+
+         while (!gameIsOver)
+        {
+        
+        FirstPlayer(grid, rows, cols);
+        bool gameOverOne = checkIfGameIsOver(grid, 1);
+        if (gameOverOne) 
+        {
+            gameIsOver = true;
+            break;
+        }
+        SecondPlayer(grid, rows, cols);
+        bool gameOverTwo = checkIfGameIsOver(grid, 2);
+        if (gameOverTwo) 
+        {
+            gameIsOver = true;
+            break;
+        }
+        }
+        //  if (checkAlreadySelected(grid, rows, cols) == 1)
+        // {
+        //     Console.WriteLine("Please choose another coordinate 2");
+        //     SecondPlayer(grid, rows, cols);
+        // } 
+        // if (checkAlreadySelected(grid, rows, cols) == 2)
+        // {
+        //     Console.WriteLine("Please choose anther coordinate for 1");
+        //     FirstPlayer(grid, rows, cols);
+        // }
+        
+        }
+        
+        
+
+        //     if (checkIfGameIsOver(grid, 1) != false || checkIfGameIsOver(grid, 2) != false) 
+        //     {
+        //         HandleMoves(grid, rows, cols);
+        //         gameIsOver = true;
+        //     }
+        // }
+    
+
+
+    // static void HandleMoves(int[,] grid, int row, int col) 
+    // {
+        
+        
+    //     bool gameIsOver = false;
+    //     bool alreadySelected = false;
+
+    //     PrintGrid(grid);
+
+        
+        // FirstPlayer(grid, row, col);
+        // SecondPlayer(grid, row, col);
+        
+        // var firstValRow = FirstPlayer(grid, row, col);
+        // var firstValCol = FirstPlayer(grid, row, col);
+
+        // var secondValRow = SecondPlayer(grid, row, col);
+        // var secondValCol = SecondPlayer(grid, row, col);
+
+        // if (checkAlreadySelected(grid, FirstPlayer(grid, row, col).Item1, FirstPlayer(grid, row, col).Item2) == 0 || checkAlreadySelected(grid, SecondPlayer(grid, row, col).Item1, SecondPlayer(grid, row, col).Item2) == 0) 
+        // {
+        
+       
+        
+    static (int, int) FirstPlayer(int[,] grid, int row, int col)
+    {
+       
+        Console.WriteLine("Player1's Turn");
+        Console.Write("Please choose a row");
+        string rowChoice = Console.ReadLine();
+        Console.Write("Please choose a column");
+        string columnChoice = Console.ReadLine();
+
+        int newColumn = int.Parse(columnChoice);
+        int newRow = int.Parse(rowChoice);
+
+
+        for (int i = 0; i < row; i++) 
+        {
+            for (int j = 0; j < col; j++)
+            {
+                grid[newRow, newColumn] = 1;
+                Console.Write(grid[i, j] + " ");
+            }
+            Console.WriteLine();
+        }
+
+       
+
+        return (newRow, newColumn);
+    }   
+
+     static (int, int) SecondPlayer(int[,] grid, int row, int col)
+    {
+       
+        Console.WriteLine("Player2's Turn");
+        Console.Write("Please choose a row");
+        string rowChoice = Console.ReadLine();
+        Console.Write("Please choose a column");
+        string columnChoice = Console.ReadLine();
+
+        int newColumn = int.Parse(columnChoice);
+        int newRow = int.Parse(rowChoice);
+
+
+        for (int i = 0; i < row; i++) 
+        {
+            for (int j = 0; j < col; j++)
+            {
+                grid[newRow, newColumn] = 2;
+                Console.Write(grid[i, j] + " ");
+            }
+            Console.WriteLine();
+        }
+        return (newRow, newColumn);
+
+
+    }   
+    static bool checkIfGameIsOver(int[,] grid, int playerSymbol)
+    {
+        for ( int row = 0; row < 3; row++) 
+        {
+        if (grid[row, 0] == playerSymbol && grid[row, 1] == playerSymbol && grid[row, 2] == playerSymbol ) 
+        {
+            return true;
+        }
+        }
+        for (int col = 0; col < 3; col++)
+        {
+        if (grid[0, col] == playerSymbol && grid[1, col] == playerSymbol && grid[2, col] == playerSymbol ) 
+        {
+            return true;
+        }
+        }
+
+        if (grid[0, 0] == playerSymbol && grid[1, 1] == playerSymbol && grid[2, 2] == playerSymbol ) 
+        {
+            return true;
+        }
+        if (grid[0, 2] == playerSymbol && grid[1, 1] == playerSymbol && grid[2, 0] == playerSymbol ) 
+        {
+            return true;
+        }
+
+        return false;
+    }
+    static int checkAlreadySelected(int[,] grid, int rows, int cols)
+    {
+
+            // if (rows < 0 || rows >= grid.GetLength(0) || cols < 0 || cols >= grid.GetLength(1) )
+            // {
+            //     throw new ArgumentOutOfRangeException("try again");
+            // }
+
+            if (grid[rows, cols] == 1) 
+            {
+                return 1;
+            } 
+            if (grid[rows, cols] == 2)
+            {
+                return 2;
+            } else 
+            {
+                return 0;
+            }
+
+    
+        
+    }
+} 
+}
